@@ -14,6 +14,10 @@ const client = new Client({
 const jar = new tough.CookieJar();
 const axiosInstance = wrapper(axios.create({ jar }));
 
+client.once('ready', () => {
+    console.log(`✅ Connecté en tant que ${client.user.tag}`);
+});
+
 client.on('messageCreate', async (message) => {
     if (message.content === "!start") {
         message.reply("🔄 Démarrage du serveur...");
@@ -28,8 +32,8 @@ client.on('messageCreate', async (message) => {
 
             message.reply("✅ Serveur en cours de démarrage !");
         } catch (err) {
+            console.error(err);
             message.reply("❌ Erreur lors du démarrage.");
-            console.log(err);
         }
     }
 });
